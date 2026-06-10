@@ -1,0 +1,34 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: target-workload
+  namespace: default
+spec:
+  replicas: 1          # стартуємо з 1
+  selector:
+    matchLabels:
+      app: target-workload
+  template:
+    metadata:
+      labels:
+        app: target-workload
+    spec:
+      containers:
+        - name: workload
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 2
+            periodSeconds: 3
