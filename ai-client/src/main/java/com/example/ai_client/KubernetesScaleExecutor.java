@@ -12,7 +12,7 @@ public class KubernetesScaleExecutor {
     private final KubernetesClient kubernetesClient;
     private static final Logger log = LoggerFactory.getLogger(KubernetesScaleExecutor.class);
 
-    // Назва Deployment, який масштабуємо
+   
     private static final String TARGET_DEPLOYMENT = "target-app";  // було "target-workload"private static final String TARGET_DEPLOYMENT = "target-app";  // було "target-workload"
     private static final String NAMESPACE = "default";
 
@@ -30,7 +30,6 @@ public class KubernetesScaleExecutor {
                     .withName(TARGET_DEPLOYMENT)
                     .scale(desired);
 
-            // Чекаємо поки pod стане Ready
             boolean ready = waitForReplicas(desired, 60);
             long elapsed = (System.nanoTime() - startTime) / 1_000_000;
 
