@@ -63,7 +63,7 @@ public class OnnxAnomalyService {
 
         return Map.of(
                 "is_anomaly",  isAnomaly,
-                "status",      isAnomaly ? "АНОМАЛІЯ" : "НОРМА",
+                "status",      isAnomaly ? "ANOMALY" : "NORMAL",
                 "action",      action,
                 "latency_ms",  latency,
                 "cpu_usage",   cpu,
