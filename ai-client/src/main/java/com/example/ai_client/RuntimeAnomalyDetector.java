@@ -59,13 +59,13 @@ public class RuntimeAnomalyDetector {
             double avgLatency = (reqCount > 0) ? (double) latSum / reqCount : 50.0;
             double errorRate  = (reqCount > 0) ? (double) errCount / reqCount : 0.01;
 
-            // Додаємо у ковзне вікно LSTM
+            
             lstmAnomalyService.addMetric(
                     avgLatency, cpu, errorRate, threadCount);
 
             if (!lstmAnomalyService.isReady()) {
                 System.out.printf(
-                        " [Цикл %d] Збір даних: %d/10%n",
+                        " [Cycle %d] Data collection: %d/10%n",
                         cycleCount, cycleCount);
                 return;
             }
@@ -101,11 +101,11 @@ public class RuntimeAnomalyDetector {
     private void executeAction(String action) {
         switch (action) {
             case "SCALE_UP" -> System.out.println(
-                    "   SCALE_UP  → збільшення кількості подів");
+                    "   SCALE_UP  -> increasing the number of pods");
             case "RETRY"    -> System.out.println(
-                    "  RETRY     → повторний запит");
+                    "  RETRY     -> retrying the request");
             case "FALLBACK" -> System.out.println(
-                    "  FALLBACK  → деградований режим");
+                    "  FALLBACK  -> degraded mode");
             default         -> {}
         }
     }
