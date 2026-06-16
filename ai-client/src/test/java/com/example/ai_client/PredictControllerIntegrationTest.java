@@ -1,3 +1,4 @@
+
 package com.example.ai_client;
 
 import org.junit.jupiter.api.*;
@@ -23,26 +24,27 @@ class PredictControllerIntegrationTest {
     private AiService aiService;
 
     @Test
-    @DisplayName("POST /api/predict → 200 OK з результатом")
+    @DisplayName("POST /api/predict returns 200 OK with the result")
     void testPredict_endToEnd() throws Exception {
-        when(aiService.predict("привіт")).thenReturn("Отримав: привіт");
+        when(aiService.predict("hello")).thenReturn("Received: hello");
 
         mockMvc.perform(post("/api/predict")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"text\":\"привіт\"}"))
+                        .content("{\"text\":\"hello\"}"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Отримав: привіт"));
+                .andExpect(content().string("Received: hello"));
     }
 
     @Test
-    @DisplayName("POST /api/predict з порожнім текстом → 200 OK")
+    @DisplayName("POST /api/predict with empty text returns 200 OK")
     void testPredict_emptyText() throws Exception {
-        when(aiService.predict("")).thenReturn("Отримав: ");
+        when(aiService.predict("")).thenReturn("Received: ");
 
         mockMvc.perform(post("/api/predict")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"text\":\"\"}"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Отримав: "));
+                .andExpect(content().string("Received: "));
     }
 }
+
