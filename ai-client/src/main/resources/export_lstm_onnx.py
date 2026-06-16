@@ -16,7 +16,7 @@ class LSTMAutoencoder(nn.Module):
         output, _ = self.decoder(repeated)
         return output
 
-# Завантаж збережену модель
+
 checkpoint = torch.load('lstm_autoencoder.pt')
 model = LSTMAutoencoder()
 model.load_state_dict(checkpoint['model_state'])
@@ -24,10 +24,10 @@ model.eval()
 threshold = checkpoint['threshold']
 print(f"Threshold: {threshold:.6f}")
 
-# Тестовий вхід (batch=1, seq=10, features=4)
+
 dummy_input = torch.randn(1, 10, 4)
 
-# Експорт
+
 torch.onnx.export(
     model,
     dummy_input,
@@ -42,12 +42,11 @@ torch.onnx.export(
 )
 print("✅ ONNX модель збережено → lstm_autoencoder.onnx")
 
-# Збережи threshold окремо
+
 with open("lstm_threshold.txt", "w") as f:
     f.write(str(threshold))
 print(f"✅ Threshold збережено → lstm_threshold.txt ({threshold:.6f})")
 
-# Верифікація через onnxruntime
 import onnxruntime as ort
 sess = ort.InferenceSession("lstm_autoencoder.onnx")
 test = np.random.randn(1, 10, 4).astype(np.float32)
