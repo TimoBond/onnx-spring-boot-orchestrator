@@ -13,7 +13,7 @@ public class KubernetesScaleExecutor {
     private static final Logger log = LoggerFactory.getLogger(KubernetesScaleExecutor.class);
 
    
-    private static final String TARGET_DEPLOYMENT = "target-app";  // було "target-workload"private static final String TARGET_DEPLOYMENT = "target-app";  // було "target-workload"
+    private static final String TARGET_DEPLOYMENT = "target-app";  
     private static final String NAMESPACE = "default";
 
     public KubernetesScaleExecutor() {
