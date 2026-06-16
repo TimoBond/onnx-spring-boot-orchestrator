@@ -21,13 +21,13 @@ public class AiService {
                     .retrieve()
                     .bodyToMono(Map.class)
                     .map(r -> String.format(
-                            "Тональність: %s (впевненість: %s%%)",
+                           "Sentiment: %s (confidence: %s%%)",
                             r.get("sentiment"),
                             Math.round(Double.parseDouble(r.get("confidence").toString()) * 100)
                     ))
                     .block();
         } catch (Exception e) {
-            return "AI сервіс недоступний. Спробуйте пізніше.";
+            return "The AI service is unavailable. Please try again later.";
         }
     }
 }
