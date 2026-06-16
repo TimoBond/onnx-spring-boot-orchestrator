@@ -1,4 +1,4 @@
-```java
+
 package com.example.ai_client;
 
 import okhttp3.mockwebserver.MockResponse;
@@ -170,5 +170,5 @@ class PrototypeValidationTest {
         assertTrue(total < 2000, "1000 requests took: " + total + "ms");
     }
 }
-```
+
 
