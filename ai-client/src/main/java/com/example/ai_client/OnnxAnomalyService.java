@@ -27,15 +27,15 @@ public class OnnxAnomalyService {
 
     private String decideAction(double latency, double cpu,
                                 double errorRate, double queueSize) {
-        // Критичний стан — fallback
+        
         if (cpu > 90 || errorRate > 0.5) {
             return "FALLBACK";
         }
-        // Високе навантаження — scale_up
+       
         if (latency > 200 || queueSize > 50) {
             return "SCALE_UP";
         }
-        // Помилки але не критично — retry
+     
         if (errorRate > 0.1) {
             return "RETRY";
         }
