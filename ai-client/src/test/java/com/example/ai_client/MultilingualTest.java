@@ -1,3 +1,4 @@
+
 package com.example.ai_client;
 
 import okhttp3.mockwebserver.MockResponse;
@@ -16,9 +17,11 @@ class MultilingualTest {
     void setUp() throws Exception {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
+
         WebClient webClient = WebClient.builder()
                 .baseUrl(mockWebServer.url("/").toString())
                 .build();
+
         aiService = new AiService(webClient);
     }
 
@@ -28,46 +31,64 @@ class MultilingualTest {
     }
 
     @Test
-    @DisplayName("Українська мова — позитивний")
+    @DisplayName("Ukrainian language - positive sentiment")
     void testUkrainianPositive() {
         mockWebServer.enqueue(new MockResponse()
-                .setBody("{\"text\":\"чудово\",\"sentiment\":\"ПОЗИТИВНИЙ\",\"confidence\":0.85}")
+                .setBody("{\"text\":\"чудово\",\"sentiment\":\"POSITIVE\",\"confidence\":0.85}")
                 .addHeader("Content-Type", "application/json"));
 
         String result = aiService.predict("чудово відмінно");
-        assertTrue(result.contains("ПОЗИТИВНИЙ"), "Українська позитивна фраза не розпізнана");
+
+        assertTrue(
+                result.contains("POSITIVE"),
+                "The Ukrainian positive phrase was not recognized"
+        );
     }
 
     @Test
-    @DisplayName("Англійська мова — позитивний")
+    @DisplayName("English language - positive sentiment")
     void testEnglishPositive() {
         mockWebServer.enqueue(new MockResponse()
-                .setBody("{\"text\":\"excellent\",\"sentiment\":\"ПОЗИТИВНИЙ\",\"confidence\":0.88}")
+                .setBody("{\"text\":\"excellent\",\"sentiment\":\"POSITIVE\",\"confidence\":0.88}")
                 .addHeader("Content-Type", "application/json"));
 
         String result = aiService.predict("excellent amazing wonderful");
-        assertTrue(result.contains("ПОЗИТИВНИЙ"), "Англійська позитивна фраза не розпізнана");
+
+        assertTrue(
+                result.contains("POSITIVE"),
+                "The English positive phrase was not recognized"
+        );
     }
 
     @Test
-    @DisplayName("Українська мова — негативний")
+    @DisplayName("Ukrainian language - negative sentiment")
     void testUkrainianNegative() {
         mockWebServer.enqueue(new MockResponse()
-                .setBody("{\"text\":\"жахливо\",\"sentiment\":\"НЕГАТИВНИЙ\",\"confidence\":0.83}")
+                .setBody("{\"text\":\"жахливо\",\"sentiment\":\"NEGATIVE\",\"confidence\":0.83}")
                 .addHeader("Content-Type", "application/json"));
 
         String result = aiService.predict("жахливо погано");
-        assertTrue(result.contains("НЕГАТИВНИЙ"), "Українська негативна фраза не розпізнана");
+
+        assertTrue(
+                result.contains("NEGATIVE"),
+                "The Ukrainian negative phrase was not recognized"
+        );
     }
 
     @Test
-    @DisplayName("Англійська мова — негативний")
+    @DisplayName("English language - negative sentiment")
     void testEnglishNegative() {
         mockWebServer.enqueue(new MockResponse()
-                .setBody("{\"text\":\"terrible\",\"sentiment\":\"НЕГАТИВНИЙ\",\"confidence\":0.86}")
+                .setBody("{\"text\":\"terrible\",\"sentiment\":\"NEGATIVE\",\"confidence\":0.86}")
                 .addHeader("Content-Type", "application/json"));
 
         String result = aiService.predict("terrible horrible awful");
-        assertTrue(result.contains("НЕГАТИВНИЙ"), "Англійська негативна фраза не розпізнана");
+
+        assertTrue(
+                result.contains("NEGATIVE"),
+                "The English negative phrase was not recognized"
+        );
     }
 }
+
+
