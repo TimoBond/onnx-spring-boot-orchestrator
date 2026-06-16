@@ -1,3 +1,4 @@
+
 package com.example.ai_client;
 
 import okhttp3.mockwebserver.MockResponse;
@@ -28,22 +29,23 @@ class ResilienceTest {
     }
 
     @Test
-    @DisplayName("Система повертає fallback коли Python сервіс недоступний")
+    @DisplayName("The system returns fallback when the Python service is unavailable")
     void testPredict_fallbackWhenServiceDown() throws Exception {
         mockWebServer.enqueue(new MockResponse().setResponseCode(500));
 
-        String result = aiService.predict("тест");
+        String result = aiService.predict("test");
 
-        assertEquals("AI сервіс недоступний. Спробуйте пізніше.", result);
+        assertEquals("The AI service is unavailable. Please try again later.", result);
     }
 
     @Test
-    @DisplayName("Система повертає fallback при таймауті")
+    @DisplayName("The system returns fallback on timeout")
     void testPredict_fallbackWhenTimeout() throws Exception {
-        mockWebServer.shutdown(); // симулюємо що сервіс повністю впав
+        mockWebServer.shutdown(); // simulate that the service has completely failed
 
-        String result = aiService.predict("тест");
+        String result = aiService.predict("test");
 
-        assertEquals("AI сервіс недоступний. Спробуйте пізніше.", result);
+        assertEquals("The AI service is unavailable. Please try again later.", result);
     }
 }
+
