@@ -42,7 +42,7 @@ public class RuntimeAnomalyDetector {
         try {
             cycleCount++;
 
-            // Реальні JVM метрики
+           
             double cpuLoad = osMxBean.getProcessCpuLoad();
             double cpu = (cpuLoad < 0) ? 5.0 : cpuLoad * 100;
 
@@ -70,7 +70,7 @@ public class RuntimeAnomalyDetector {
                 return;
             }
 
-            // LSTM інференс
+          
             Map<String, Object> result = lstmAnomalyService.detect();
 
             boolean isAnomaly = (boolean) result.get("is_anomaly");
