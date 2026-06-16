@@ -1,0 +1,12 @@
+experiment,approach,N,AVG_ms,STD_ms,P50_ms,P95_ms,P99_ms,RPS,notes
+Kubernetes sequential,REST Python sidecar,2000,26.09,21.913,12.042,62.065,76.487,38.3,Single-threaded sequential httpx client; calculated RPS = 1000/AVG
+Kubernetes sequential,ONNX JVM embedded,2000,4.839,2.341,4.655,5.367,6.244,206.7,Single-threaded sequential httpx client; calculated RPS = 1000/AVG
+Local concurrent 8 clients,REST Python sidecar,,7.1,,,25.7,,995,8 clients x 500 requests
+Local concurrent 8 clients,ONNX JVM embedded,,4.1,,,5.9,,1717,8 clients x 500 requests
+Local protocol sequential,REST Python sidecar,2000,15.9,,,,,,Protocol comparison baseline
+Local protocol sequential,gRPC Python sidecar,2000,6.9,,,8.0,,,Protocol comparison
+Local protocol sequential,ONNX JVM embedded,2000,2.9,,,,,,Protocol comparison
+Cold start,REST Python sidecar,,1473,,,,,,Milliseconds from process startup to first successful response
+Cold start,ONNX JVM embedded,,389,,,,,,Milliseconds from process startup to first successful response
+Memory footprint,REST Python sidecar,,309.5,,,,,,"MiB, Spring Boot + Python/FastAPI containers"
+Memory footprint,ONNX JVM embedded,,175.8,,,,,,"MiB, single Spring Boot container"
