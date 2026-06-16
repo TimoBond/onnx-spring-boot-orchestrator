@@ -30,9 +30,9 @@ class PrototypeValidationTest {
     @MockBean
     private AiService aiService;
 
-    // ═══════════════════════════════════════════
+   
     // V1 — REST Integration Layer
-    // ═══════════════════════════════════════════
+  
 
     @Test
     @Order(1)
@@ -78,9 +78,9 @@ class PrototypeValidationTest {
         System.out.println("✅ V1.3 Fallback механізм працює");
     }
 
-    // ═══════════════════════════════════════════
+    
     // V2 — ONNX Native Inference
-    // ═══════════════════════════════════════════
+  
 
     @Test
     @Order(4)
@@ -142,9 +142,9 @@ class PrototypeValidationTest {
         System.out.println("✅ V3.3 FALLBACK: cpu=95%, error=0.9");
     }
 
-    // ═══════════════════════════════════════════
+   
     // V4 — Latency Validation
-    // ═══════════════════════════════════════════
+  
 
     @Test
     @Order(10)
