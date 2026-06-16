@@ -1,4 +1,4 @@
-```java
+
 package com.example.ai_client;
 
 import okhttp3.mockwebserver.MockResponse;
@@ -110,6 +110,6 @@ class PerformanceTest {
         assertTrue(avg < 500);
     }
 }
-```
+
 
 }
