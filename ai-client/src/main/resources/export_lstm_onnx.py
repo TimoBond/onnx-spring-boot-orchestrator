@@ -40,15 +40,15 @@ torch.onnx.export(
     },
     opset_version=14,
 )
-print("✅ ONNX модель збережено → lstm_autoencoder.onnx")
+print("ONNX model saved to lstm_autoencoder.onnx")
 
 
 with open("lstm_threshold.txt", "w") as f:
     f.write(str(threshold))
-print(f"✅ Threshold збережено → lstm_threshold.txt ({threshold:.6f})")
+print(f"Threshold saved to lstm_threshold.txt ({threshold:.6f})")
 
 import onnxruntime as ort
 sess = ort.InferenceSession("lstm_autoencoder.onnx")
 test = np.random.randn(1, 10, 4).astype(np.float32)
 result = sess.run(None, {"input": test})
-print(f"✅ Верифікація ONNX: output shape = {result[0].shape}")
+print(f"ONNX verification completed: output shape = {result[0].shape}")
