@@ -1,3 +1,4 @@
+
 package com.example.ai_client;
 
 import okhttp3.mockwebserver.MockResponse;
@@ -43,12 +44,12 @@ class RestVsOnnxBenchmarkTest {
     private long benchmarkRest(int count) {
         for (int i = 0; i < count; i++) {
             mockWebServer.enqueue(new MockResponse()
-                    .setBody("{\"sentiment\":\"ПОЗИТИВНИЙ\",\"confidence\":0.87}")
+                    .setBody("{\"sentiment\":\"POSITIVE\",\"confidence\":0.87}")
                     .addHeader("Content-Type", "application/json"));
         }
         long start = System.currentTimeMillis();
         for (int i = 0; i < count; i++) {
-            aiService.predict("тест " + i);
+            aiService.predict("test " + i);
         }
         return System.currentTimeMillis() - start;
     }
@@ -62,44 +63,45 @@ class RestVsOnnxBenchmarkTest {
     }
 
     @Test
-    @DisplayName("Benchmark 10 запитів: REST vs ONNX")
+    @DisplayName("Benchmark 10 requests: REST vs ONNX")
     void benchmark_10() throws Exception {
         long rest = benchmarkRest(10);
         long onnx = benchmarkOnnx(10);
         double restAvg = (double) rest / 10;
         double onnxAvg = (double) onnx / 10;
-        System.out.printf("=== 10 запитів ===%n");
-        System.out.printf("REST  → загально: %dms | avg: %.2fms%n", rest, restAvg);
-        System.out.printf("ONNX  → загально: %dms | avg: %.2fms%n", onnx, onnxAvg);
-        System.out.printf("ONNX швидше у %.1fx%n%n", restAvg / onnxAvg);
+        System.out.printf("10 requests%n");
+        System.out.printf("REST total: %dms | avg: %.2fms%n", rest, restAvg);
+        System.out.printf("ONNX total: %dms | avg: %.2fms%n", onnx, onnxAvg);
+        System.out.printf("ONNX is faster by %.1fx%n%n", restAvg / onnxAvg);
         assertTrue(onnx <= rest + 100);
     }
 
     @Test
-    @DisplayName("Benchmark 100 запитів: REST vs ONNX")
+    @DisplayName("Benchmark 100 requests: REST vs ONNX")
     void benchmark_100() throws Exception {
         long rest = benchmarkRest(100);
         long onnx = benchmarkOnnx(100);
         double restAvg = (double) rest / 100;
         double onnxAvg = (double) onnx / 100;
-        System.out.printf("=== 100 запитів ===%n");
-        System.out.printf("REST  → загально: %dms | avg: %.2fms%n", rest, restAvg);
-        System.out.printf("ONNX  → загально: %dms | avg: %.2fms%n", onnx, onnxAvg);
-        System.out.printf("ONNX швидше у %.1fx%n%n", restAvg / onnxAvg);
+        System.out.printf("100 requests%n");
+        System.out.printf("REST total: %dms | avg: %.2fms%n", rest, restAvg);
+        System.out.printf("ONNX total: %dms | avg: %.2fms%n", onnx, onnxAvg);
+        System.out.printf("ONNX is faster by %.1fx%n%n", restAvg / onnxAvg);
         assertTrue(onnx <= rest + 100);
     }
 
     @Test
-    @DisplayName("Benchmark 1000 запитів: REST vs ONNX")
+    @DisplayName("Benchmark 1000 requests: REST vs ONNX")
     void benchmark_1000() throws Exception {
         long rest = benchmarkRest(1000);
         long onnx = benchmarkOnnx(1000);
         double restAvg = (double) rest / 1000;
         double onnxAvg = (double) onnx / 1000;
-        System.out.printf("=== 1000 запитів ===%n");
-        System.out.printf("REST  → загально: %dms | avg: %.2fms%n", rest, restAvg);
-        System.out.printf("ONNX  → загально: %dms | avg: %.2fms%n", onnx, onnxAvg);
-        System.out.printf("ONNX швидше у %.1fx%n%n", restAvg / onnxAvg);
+        System.out.printf("1000 requests%n");
+        System.out.printf("REST total: %dms | avg: %.2fms%n", rest, restAvg);
+        System.out.printf("ONNX total: %dms | avg: %.2fms%n", onnx, onnxAvg);
+        System.out.printf("ONNX is faster by %.1fx%n%n", restAvg / onnxAvg);
         assertTrue(onnx <= rest + 500);
     }
 }
+

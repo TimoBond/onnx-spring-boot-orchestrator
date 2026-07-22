@@ -42,7 +42,7 @@ public class RuntimeAnomalyDetector {
         try {
             cycleCount++;
 
-            // Реальні JVM метрики
+           
             double cpuLoad = osMxBean.getProcessCpuLoad();
             double cpu = (cpuLoad < 0) ? 5.0 : cpuLoad * 100;
 
@@ -59,18 +59,18 @@ public class RuntimeAnomalyDetector {
             double avgLatency = (reqCount > 0) ? (double) latSum / reqCount : 50.0;
             double errorRate  = (reqCount > 0) ? (double) errCount / reqCount : 0.01;
 
-            // Додаємо у ковзне вікно LSTM
+            
             lstmAnomalyService.addMetric(
                     avgLatency, cpu, errorRate, threadCount);
 
             if (!lstmAnomalyService.isReady()) {
                 System.out.printf(
-                        " [Цикл %d] Збір даних: %d/10%n",
+                        " [Cycle %d] Data collection: %d/10%n",
                         cycleCount, cycleCount);
                 return;
             }
 
-            // LSTM інференс
+          
             Map<String, Object> result = lstmAnomalyService.detect();
 
             boolean isAnomaly = (boolean) result.get("is_anomaly");
@@ -101,11 +101,11 @@ public class RuntimeAnomalyDetector {
     private void executeAction(String action) {
         switch (action) {
             case "SCALE_UP" -> System.out.println(
-                    "   SCALE_UP  → збільшення кількості подів");
+                    "   SCALE_UP  -> increasing the number of pods");
             case "RETRY"    -> System.out.println(
-                    "  RETRY     → повторний запит");
+                    "  RETRY     -> retrying the request");
             case "FALLBACK" -> System.out.println(
-                    "  FALLBACK  → деградований режим");
+                    "  FALLBACK  -> degraded mode");
             default         -> {}
         }
     }

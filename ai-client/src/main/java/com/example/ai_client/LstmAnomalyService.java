@@ -21,7 +21,7 @@ public class LstmAnomalyService {
     private static final int WINDOW_SIZE = 10;
     private static final int FEATURES    = 3;
 
-    // Нормалізація (3 фічі: latency, cpu, error_rate)
+   
     private static final float[] FEATURE_MIN = {0f,   0f,  0f};
     private static final float[] FEATURE_MAX = {600f, 100f, 1f};
 
@@ -43,7 +43,7 @@ public class LstmAnomalyService {
         threshold = Float.parseFloat(thresholdStr);
 
         System.out.printf(
-                " LSTM Autoencoder завантажено (threshold=%.6f)%n",
+                "LSTM Autoencoder loaded successfully (threshold=%.6f)%n",
                 threshold);
     }
 
@@ -71,14 +71,14 @@ public class LstmAnomalyService {
     public Map<String, Object> detect() throws Exception {
         if (!isReady()) {
             return Map.of(
-                    "status",              "НЕДОСТАТНЬО ДАНИХ",
+                    "status",              "INSUFFICIENT_DATA",
                     "is_anomaly",          false,
                     "action",              "NONE",
                     "reconstruction_error", 0.0
             );
         }
 
-        // Формуємо тензор (1, 10, 3)
+      
         float[][][] input = new float[1][WINDOW_SIZE][FEATURES];
         int i = 0;
         for (float[] vec : window) {
@@ -117,7 +117,7 @@ public class LstmAnomalyService {
 
     private String decideAction(float[] last) {
         if (last == null) return "NONE";
-        // last = normalized values → денормалізуємо для прийняття рішень
+      
         float latency   = last[0] * FEATURE_MAX[0];
         float cpu       = last[1] * FEATURE_MAX[1];
         float errorRate = last[2] * FEATURE_MAX[2];

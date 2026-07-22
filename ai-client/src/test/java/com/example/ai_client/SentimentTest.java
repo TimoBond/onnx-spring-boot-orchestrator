@@ -1,3 +1,4 @@
+
 package com.example.ai_client;
 
 import okhttp3.mockwebserver.MockResponse;
@@ -28,35 +29,36 @@ class SentimentTest {
     }
 
     @Test
-    @DisplayName("Позитивний текст → ПОЗИТИВНИЙ")
+    @DisplayName("Positive text -> POSITIVE")
     void testPositiveSentiment() {
         mockWebServer.enqueue(new MockResponse()
-                .setBody("{\"text\":\"чудово\",\"sentiment\":\"ПОЗИТИВНИЙ\",\"confidence\":0.85}")
+                .setBody("{\"text\":\"excellent\",\"sentiment\":\"POSITIVE\",\"confidence\":0.85}")
                 .addHeader("Content-Type", "application/json"));
 
-        String result = aiService.predict("чудово відмінно супер");
-        assertTrue(result.contains("ПОЗИТИВНИЙ"));
+        String result = aiService.predict("excellent great super");
+        assertTrue(result.contains("POSITIVE"));
     }
 
     @Test
-    @DisplayName("Негативний текст → НЕГАТИВНИЙ")
+    @DisplayName("Negative text -> NEGATIVE")
     void testNegativeSentiment() {
         mockWebServer.enqueue(new MockResponse()
-                .setBody("{\"text\":\"жахливо\",\"sentiment\":\"НЕГАТИВНИЙ\",\"confidence\":0.82}")
+                .setBody("{\"text\":\"terrible\",\"sentiment\":\"NEGATIVE\",\"confidence\":0.82}")
                 .addHeader("Content-Type", "application/json"));
 
-        String result = aiService.predict("жахливо погано провал");
-        assertTrue(result.contains("НЕГАТИВНИЙ"));
+        String result = aiService.predict("terrible bad failure");
+        assertTrue(result.contains("NEGATIVE"));
     }
 
     @Test
-    @DisplayName("Нейтральний текст → НЕЙТРАЛЬНИЙ")
+    @DisplayName("Neutral text -> NEUTRAL")
     void testNeutralSentiment() {
         mockWebServer.enqueue(new MockResponse()
-                .setBody("{\"text\":\"звичайний день\",\"sentiment\":\"НЕЙТРАЛЬНИЙ\",\"confidence\":0.78}")
+                .setBody("{\"text\":\"ordinary day\",\"sentiment\":\"NEUTRAL\",\"confidence\":0.78}")
                 .addHeader("Content-Type", "application/json"));
 
-        String result = aiService.predict("звичайний день нічого особливого");
-        assertTrue(result.contains("НЕЙТРАЛЬНИЙ"));
+        String result = aiService.predict("ordinary day nothing special");
+        assertTrue(result.contains("NEUTRAL"));
     }
 }
+

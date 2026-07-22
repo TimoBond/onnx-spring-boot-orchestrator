@@ -1,3 +1,4 @@
+
 package com.example.ai_client;
 
 import okhttp3.mockwebserver.MockResponse;
@@ -16,9 +17,11 @@ class AiServiceUnitTest {
     void setUp() throws Exception {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
+
         WebClient webClient = WebClient.builder()
                 .baseUrl(mockWebServer.url("/").toString())
                 .build();
+
         aiService = new AiService(webClient);
     }
 
@@ -28,15 +31,16 @@ class AiServiceUnitTest {
     }
 
     @Test
-    @DisplayName("AiService повертає тональність від Python сервісу")
+    @DisplayName("AiService returns sentiment from the Python service")
     void testPredict_returnsResultFromPythonService() {
         mockWebServer.enqueue(new MockResponse()
-                .setBody("{\"sentiment\":\"ПОЗИТИВНИЙ\",\"confidence\":0.87}")
+                .setBody("{\"sentiment\":\"POSITIVE\",\"confidence\":0.87}")
                 .addHeader("Content-Type", "application/json"));
 
-        String result = aiService.predict("тест");
+        String result = aiService.predict("test");
 
-        assertTrue(result.contains("ПОЗИТИВНИЙ"));
+        assertTrue(result.contains("POSITIVE"));
         assertTrue(result.contains("87%"));
     }
 }
+

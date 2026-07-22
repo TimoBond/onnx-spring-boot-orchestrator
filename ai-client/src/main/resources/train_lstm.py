@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 
-# Межі нормалізації (MinMax → [0,1])
+
 FEATURE_MIN = np.array([0.0,  0.0,  0.0,   0.0])
 FEATURE_MAX = np.array([600.0, 100.0, 1.0, 100.0])
 
@@ -18,7 +18,7 @@ def generate_normal_sequence(n=300):
                 np.random.normal(50, 4),
                 np.random.normal(5, 1.5),
                 np.random.normal(0.01, 0.003),
-                 np.random.normal(38, 8),        # threads (30-50 норма)
+                 np.random.normal(38, 8),        
             ])
             seq.append(normalize(raw))
         data.append(seq)
@@ -47,7 +47,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 criterion = nn.MSELoss()
 X_tensor = torch.tensor(X_train)
 
-print("Тренування...")
+print("Training...")
 for epoch in range(200):
     model.train()
     optimizer.zero_grad()
@@ -58,7 +58,7 @@ for epoch in range(200):
     if (epoch + 1) % 40 == 0:
         print(f"Epoch {epoch+1}/200 | Loss: {loss.item():.6f}")
 
-print("✅ Тренування завершено")
+print("Training completed")
 
 model.eval()
 with torch.no_grad():
@@ -78,14 +78,13 @@ with torch.no_grad():
     e_anom = ((model(make_seq(500, 95, 0.9, 100)) -
                make_seq(500, 95, 0.9, 100)) ** 2).mean().item()
 
-print(f"\nНорма  MSE: {e_norm:.6f} → {'АНОМАЛІЯ' if e_norm > threshold else 'НОРМА'}")
-print(f"Аномалія MSE: {e_anom:.6f} → {'АНОМАЛІЯ' if e_anom > threshold else 'НОРМА'}")
+print(f"\nNorm  MSE: {e_norm:.6f} → {'ANOMALY' if e_norm > threshold else 'НОРМА'}")
+print(f"ANOMALY MSE: {e_anom:.6f} → {'ANOMALY' if e_anom > threshold else 'НОРМА'}")
 
 torch.save({'model_state': model.state_dict(), 'threshold': threshold},
            'lstm_autoencoder.pt')
-print("\n✅ Збережено → lstm_autoencoder.pt")
+print("\n saved → lstm_autoencoder.pt")
 
-# Зберегти параметри нормалізації
 np.save('feature_min.npy', FEATURE_MIN)
 np.save('feature_max.npy', FEATURE_MAX)
-print("✅ Нормалізацію збережено")
+print(" normalization saved")

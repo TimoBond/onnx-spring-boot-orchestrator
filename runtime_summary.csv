@@ -1,0 +1,8 @@
+metric,value
+Monitoring duration,72 cycles
+Normal states,65 (90.3%)
+Detected anomalies,7 (9.7%)
+Operationally meaningful detections,2 latency spikes: 182 ms and 526 ms
+Non-actionable detections,5 abnormally low latency events: 1-7 ms
+Activated orchestration actions,1 SCALE_UP at latency 526 ms
+False actions in idle state,0%
