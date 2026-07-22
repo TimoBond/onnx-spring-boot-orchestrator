@@ -4,7 +4,7 @@ PORT = 9090
 
 
 EVENTS = [
-    # Original self-inflicted events (unchanged from paper's Section 3.8)
+    
     (60,  "stress", 500),
     (120, "stress", 50),
     (150, "errors", 0.4),
