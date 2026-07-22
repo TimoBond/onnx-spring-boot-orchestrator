@@ -11,8 +11,6 @@ print(f"Monitor: every {INTERVAL}s, {PROBES} probes, {DURATION}s total -> {OUT}"
 
 with open(OUT, "w", newline="") as f:
     writer = csv.writer(f)
-    # Розширено порівняно з оригіналом: додано timestamp (ISO) та action
-    # для подальшого ground-truth аналізу (detection delay, false-action rate).
     writer.writerow(["cycle", "timestamp_iso", "elapsed_s", "avg_latency_ms",
                       "error_rate", "is_anomaly", "action", "inference_ms",
                       "total_cycle_ms"])
