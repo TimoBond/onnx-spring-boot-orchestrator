@@ -1,0 +1,38 @@
+# Сценарій: Dependency failure через втрату пакетів / partition
+# Проксі для application-layer flood-like error-rate increase
+# Відповідає п.4 у списку Рецензента 1: "dependency failures"
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: dependency-packet-loss
+  namespace: default
+spec:
+  action: loss
+  mode: all
+  selector:
+    namespaces:
+      - default
+    labelSelectors:
+      app: downstream-dependency
+  loss:
+    loss: "30"
+    correlation: "25"
+  duration: "180s"
+
+---
+# Повна мережева партиція (жорсткіший варіант, для перевірки FALLBACK-гілки)
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: dependency-partition
+  namespace: default
+spec:
+  action: partition
+  mode: all
+  selector:
+    namespaces:
+      - default
+    labelSelectors:
+      app: downstream-dependency
+  direction: both
+  duration: "60s"
