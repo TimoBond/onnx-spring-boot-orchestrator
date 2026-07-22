@@ -35,13 +35,11 @@ public class ScaleExperimentController {
         boolean isAnomaly = (boolean) anomaly.get("is_anomaly");
 
         // 2. Decision (та сама логіка що в RuntimeAnomalyDetector)
+        // RULES-ONLY: apply thresholds directly, without the ONNX anomaly gate
         String action = "NONE";
-        if (isAnomaly) {
-            if (cpu > 90 || errorRate > 0.5)   action = "FALLBACK";
-            else if (latency > 200)             action = "SCALE_UP";
-            else if (errorRate > 0.1)           action = "RETRY";
-        }
-
+        if (cpu > 90 || errorRate > 0.5)   action = "FALLBACK";
+        else if (latency > 200)             action = "SCALE_UP";
+        else if (errorRate > 0.1)           action = "RETRY";
         // 3. K8s action
         ScaleResult scaleResult = scaleExecutor.execute(action, 1);
 

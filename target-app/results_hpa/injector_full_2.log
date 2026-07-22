@@ -1,0 +1,14 @@
+Fault injector started (FULL RUN - 900s)
+  T+60s: STRESS -> 500ms
+  T+120s: STRESS -> 50ms
+  T+150s: ERRORS -> 0.4
+  T+210s: ERRORS -> 0.0
+  T+240s: STRESS -> 800ms
+  T+270s: STRESS -> 50ms
+  T+330s: CHAOS APPLY 01-slow-rate-latency.yaml -> OK
+  T+500s: CHAOS DELETE 01-slow-rate-latency.yaml -> OK
+  T+560s: CHAOS APPLY 02-resource-exhaustion.yaml -> OK
+  T+680s: CHAOS DELETE 02-resource-exhaustion.yaml -> OK
+  T+740s: CHAOS APPLY 03-dependency-failure.yaml -> OK
+  T+830s: CHAOS DELETE 03-dependency-failure.yaml -> OK
+Fault injection complete (full run)
