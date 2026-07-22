@@ -1,26 +1,3 @@
-"""
-Batch runner for repeated full-cycle chaos experiments.
-
-Automates what was previously done manually across 3 separate PowerShell
-windows: resets target-app pods, clears any lingering Chaos Mesh resources,
-launches load_gen.py + monitor_loop_extended.py + fault_injector_full_run.py
-in parallel, waits for completion, then repeats for N runs.
-
-Usage:
-    python batch_runner.py --runs 15 --duration 950
-
-Each run produces:
-    run_full_<i>.csv        (load_gen output)
-    monitor_full_<i>.csv    (monitor_loop output, with ground truth timestamps)
-    injector_full_<i>.log   (fault_injector stdout, for verifying CHAOS APPLY/DELETE OK)
-
-Requires: kubectl in PATH, port-forwards for 9090/9091 already running
-(these are NOT restarted automatically because they persist across pod
-restarts as long as the Service, not a specific pod, is targeted... in
-practice kubectl port-forward against a Service does pin to a pod, so
-this script also re-establishes both port-forwards before each run).
-"""
-
 import argparse
 import subprocess
 import sys
