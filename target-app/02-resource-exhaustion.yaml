@@ -1,6 +1,4 @@
-# Сценарій: Resource exhaustion (CPU + memory stress)
-# Проксі для виснаження ресурсів, що передує деградації доступності
-# Відповідає п.3 у списку Рецензента 1: "resource exhaustion"
+
 apiVersion: chaos-mesh.org/v1alpha1
 kind: StressChaos
 metadata:
@@ -16,13 +14,10 @@ spec:
   stressors:
     cpu:
       workers: 1
-      load: 30                # знижено ще раз: під комбінованим load_gen+downstream навантаженням
-                               # навіть workers:2/load:50 спричиняв OOMKilled
+      load: 30                
   duration: "300s"
 
----
-# Доповнення: періодичний рестарт пода для сценарію "dependency failure / crash"
-# Відповідає п.4 у списку Рецензента 1: "dependency failures"
+
 apiVersion: chaos-mesh.org/v1alpha1
 kind: PodChaos
 metadata:
